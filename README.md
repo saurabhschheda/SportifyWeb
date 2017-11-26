@@ -1,6 +1,6 @@
 # SportifyWeb
 
-##SCHEMA
+## SCHEMA
 League - ID, Name, Country, UEFA Coefficient
 Team - ID, Name, Position, Manager, Colors
 Player - ID, Name, Age, Preferred Postion, Team, Jersey number
