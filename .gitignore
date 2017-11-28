@@ -58,3 +58,4 @@ typings/
 .env
 
 data/key.py
+data/json
