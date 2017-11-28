@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 27, 2017 at 11:24 PM
+-- Generation Time: Nov 29, 2017 at 12:59 AM
 -- Server version: 5.7.19-0ubuntu0.16.04.1
 -- PHP Version: 7.0.22-0ubuntu0.16.04.1
 
@@ -57,7 +57,6 @@ CREATE TABLE `Match` (
   `League` varchar(17) NOT NULL,
   `Date` datetime DEFAULT NULL,
   `Venue` varchar(17) DEFAULT NULL,
-  `Referee` varchar(15) DEFAULT NULL,
   `HomeGoals` int(11) DEFAULT NULL,
   `AwayGoals` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -141,8 +140,8 @@ ALTER TABLE `Team`
   ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `Name` (`Name`),
   ADD UNIQUE KEY `Position` (`Position`),
-  ADD UNIQUE KEY `Manager` (`Manager`),
-  ADD UNIQUE KEY `League` (`League`);
+  ADD UNIQUE KEY `League` (`League`),
+  ADD UNIQUE KEY `Position_2` (`Position`);
 
 --
 -- Indexes for table `Venue`
