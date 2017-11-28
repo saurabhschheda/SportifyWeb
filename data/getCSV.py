@@ -21,6 +21,11 @@ def createCSVs():
   matchCSV = open("data/match.csv", 'w')
   matchCSV.close()
 
+def writeCSV(filename, line):
+  csv = open(filename, 'a')
+  csv.write(line)
+  csv.close()
+
 def extractTeamData(data):
   id = data["team"]["id"]
   name = data["team"]["name"]
@@ -33,16 +38,27 @@ def extractTeamData(data):
   except KeyError: color2 = color1
   line = id + "," + name + "," + league + "," + str(position) + "," + manager
   line = line + "," + color1 + "," + color2 + "\n"
-  teamCSV = open("data/team.csv", 'a')
-  teamCSV.write(line)
-  teamCSV.close()
+  writeCSV("data/team.csv", line)
+
+def extractVenueData(data):
+  data = data["venue"]
+  id = data["id"]
+  name = data["name"]
+  try: [latitude, longitude] = data["map_coordinates"].split(',')
+  except KeyError: [latitude, longitude] = [0, 0]
+  city = data["city_name"]
+  country = data["country_name"]
+  capacity = data["name"]
+  line = id + "," + name + "," + str(latitude) + "," + str(longitude) + ","
+  line = line + city + "," + country + "," + str(capacity) + "\n"
+  writeCSV("data/venue.csv", line)
 
 def extractData(filename):
   jsonFile = open(filename, 'r')
   data = json.loads(jsonFile.read())
   jsonFile.close()
-  extractTeamData(data)
-  # extractVenueData(data)
+  # extractTeamData(data)
+  extractVenueData(data)
   # extractPlayerData(data)
 
 def fillCSV():
