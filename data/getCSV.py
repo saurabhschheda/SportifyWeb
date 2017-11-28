@@ -1,15 +1,20 @@
 import json
 import os
+from datetime import date
 
 def getSingleName(string):
   string = string.split(',')
   string.reverse()
   string[0] = string[0].replace(" ", "")
-  try:
-    string = string[0] + " " + string[1]
-  except IndexError:
-    string = string[0]
+  try: string = string[0] + " " + string[1]
+  except IndexError: string = string[0]
   return string
+
+def getAge(dob):
+  dob = dob.split('-')
+  for i in range(len(dob)): dob[i] = int(dob[i])
+  today = date.today()
+  return today.year - dob[0] - ((today.month, today.day) < (dob[1], dob[2]))
 
 def createCSVs():
   teamCSV = open("data/team.csv", 'w')
@@ -53,13 +58,27 @@ def extractVenueData(data):
   line = line + city + "," + country + "," + str(capacity) + "\n"
   writeCSV("data/venue.csv", line)
 
+def extractPlayerData(data):
+  players = data["players"]
+  team = data["team"]["id"]
+  for player in players:
+    id = player["id"]
+    name = getSingleName(player["name"])
+    age = getAge(player["date_of_birth"])
+    position = player["type"]
+    try: jerseyNo = player["jersey_number"]
+    except KeyError: jerseyNo = 0
+    line = id + "," + name + "," + str(age) + "," + team + "," + position + ","
+    line = line + str(jerseyNo) + "\n"
+    writeCSV("data/player.csv", line)
+
 def extractData(filename):
   jsonFile = open(filename, 'r')
   data = json.loads(jsonFile.read())
   jsonFile.close()
-  # extractTeamData(data)
+  extractTeamData(data)
   extractVenueData(data)
-  # extractPlayerData(data)
+  extractPlayerData(data)
 
 def fillCSV():
   createCSVs()
