@@ -59,4 +59,8 @@ typings/
 
 data/key.py
 data/json
+data/match.csv
+data/player.csv
+data/team.csv
+data/venue.csv
 __pycache__
