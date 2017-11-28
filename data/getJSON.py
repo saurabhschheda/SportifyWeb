@@ -1,6 +1,7 @@
 import key
 import http.client
 import json
+from datetime import date
 
 KEY = key.getAPIKey()
 
@@ -37,18 +38,28 @@ def getAllTeamIDs():
     teamIDs = teamIDs + getTeamIDs(league)
   return teamIDs
 
-def writeTeamJson(team):
-  path = "teams/" + team + "/profile.json?api_key=" + KEY
-  data = getData(path, True)
-  jsonFile = open("data/json/teams/" + team.replace(':', '_') + ".json", 'w')
+def writeJson(url, path):
+  data = getData(url, True)
+  jsonFile = open(path, 'w')
   jsonFile.write(data)
   jsonFile.close()
 
-def init():
+def updateTeams():
   print("Getting all team IDs ...")
   teams = getAllTeamIDs()
-  print(str(len(teams)) + " teams found. Writing into files ...")
+  print(str(len(teams)) + " teams found")
   for team in teams:
-    writeTeamJson(team)
+    url = "teams/" + team + "/profile.json?api_key=" + KEY
+    path = "data/json/teams/" + team.replace(':', '_') + ".json"
+    print("Writing " + team + "into file ...")
+    writeJson(url, path)
 
-init()
+def updateMatches():
+  dt = date.today()
+  print("Writing schedule ...")
+  url = "schedules/" + dt.isoformat() + "/schedule.json?api_key=" + KEY
+  writeJson(url, "data/json/matches/schedule.json")
+  dt = date(dt.year, dt.month, dt.day - 1)
+  print("Writing results ...")
+  url = "schedules/" + dt.isoformat() + "/results.json?api_key=" + KEY
+  writeJson(url, "data/json/matches/results.json")
