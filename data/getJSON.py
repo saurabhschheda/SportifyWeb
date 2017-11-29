@@ -1,7 +1,6 @@
 import key
 import http.client
 import json
-from datetime import date
 
 KEY = key.getAPIKey()
 
@@ -55,11 +54,14 @@ def updateTeams():
     writeJson(url, path)
 
 def updateMatches():
-  dt = date.today()
-  print("Writing schedule ...")
-  url = "schedules/" + dt.isoformat() + "/schedule.json?api_key=" + KEY
-  writeJson(url, "data/json/matches/schedule.json")
-  dt = date(dt.year, dt.month, dt.day - 1)
-  print("Writing results ...")
-  url = "schedules/" + dt.isoformat() + "/results.json?api_key=" + KEY
-  writeJson(url, "data/json/matches/results.json")
+  leagues = [17, 23, 34, 35, 8]
+  for league in leagues:
+    print("For league " + str(league))
+    print("Writing Results ...")
+    url = "tournaments/sr:tournament:" + \
+        str(league) + "/results.json?api_key=" + KEY
+    writeJson(url, "data/json/matches/results.json")
+    print("Writing Schedule ...")
+    url = "tournaments/sr:tournament:" + \
+        str(league) + "/schedule.json?api_key=" + KEY
+    writeJson(url, "data/json/matches/results.json")
