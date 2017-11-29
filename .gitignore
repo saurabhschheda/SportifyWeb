@@ -59,7 +59,8 @@ typings/
 
 data/key.py
 data/json
-data/match.csv
+data/results.csv
+data/schedule.csv
 data/player.csv
 data/team.csv
 data/venue.csv

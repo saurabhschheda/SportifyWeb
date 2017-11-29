@@ -23,8 +23,10 @@ def createCSVs():
   playerCSV.close()
   venueCSV = open("data/venue.csv", 'w')
   venueCSV.close()
-  matchCSV = open("data/match.csv", 'w')
-  matchCSV.close()
+  resultCSV = open("data/results.csv", 'w')
+  resultCSV.close()
+  scheduleCSV = open("data/schedule.csv", 'w')
+  scheduleCSV.close()
 
 def getJSONData(filename):
   jsonFile = open(filename, 'r')
@@ -59,7 +61,7 @@ def extractVenueData(data):
   except KeyError: [latitude, longitude] = [0, 0]
   city = data["city_name"]
   country = data["country_name"]
-  capacity = data["name"]
+  capacity = data["capacity"]
   line = id + "," + name + "," + str(latitude) + "," + str(longitude) + ","
   line = line + city + "," + country + "," + str(capacity) + "\n"
   writeCSV("data/venue.csv", line)
@@ -107,15 +109,15 @@ def extractResults(league):
     try: awayGoals = resultData["away_score"]
     except KeyError: awayGoals = 0
     line = line + "," + str(homeGoals) + "," + str(awayGoals) + "\n"
-    writeCSV("data/match.csv", line)
+    writeCSV("data/results.csv", line)
 
 def extractSchedule(league):
   schedule = getJSONData("data/json/matches/schedule_" + str(league) + ".json")
   matches = schedule["sport_events"]
   for match in matches:
     line = getMatchDataLine(match)
-    line = line + ",,\n"
-    writeCSV("data/match.csv", line)
+    line = line + ",NULL,NULL\n"
+    writeCSV("data/schedule.csv", line)
 
 def extractMatchData():
   leagues = [17, 23, 34, 35, 8]
@@ -129,3 +131,5 @@ def fillCSV():
   for filename in os.listdir(path):
     extractData(path + filename)
   extractMatchData()
+
+extractMatchData()
