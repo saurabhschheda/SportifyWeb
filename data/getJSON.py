@@ -60,10 +60,8 @@ def updateMatches():
     print("Writing Results ...")
     url = "tournaments/sr:tournament:" + \
         str(league) + "/results.json?api_key=" + KEY
-    writeJson(url, "data/json/matches/results.json")
+    writeJson(url, "data/json/matches/results_" + str(league) + ".json")
     print("Writing Schedule ...")
     url = "tournaments/sr:tournament:" + \
         str(league) + "/schedule.json?api_key=" + KEY
-    writeJson(url, "data/json/matches/schedule.json")
-
-updateMatches()
+    writeJson(url, "data/json/matches/schedule_" + str(league) + ".json")

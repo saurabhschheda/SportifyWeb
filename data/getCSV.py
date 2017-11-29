@@ -84,43 +84,44 @@ def extractData(filename):
   extractVenueData(data)
   extractPlayerData(data)
 
-def getMatchDataLine(match, leagues):
-  league = match["tournament"]["id"]
-  if league not in leagues: return ''
+def getMatchDataLine(match):
   id = match["id"]
   competitors = match["competitors"]
   home = competitors[0]["id"]
-  away = competitors[1]["id"]  
+  away = competitors[1]["id"]
+  league = match["tournament"]["id"]
   date = match["scheduled"][0:19].replace('T', ' ')
   venue = match["venue"]["id"]
   line = id + "," + home + "," + away + "," + league + "," + date + "," + venue
   return line
 
-def extractResults(leagues):
-  results = getJSONData("data/json/matches/results.json")
+def extractResults(league):
+  results = getJSONData("data/json/matches/results_" + str(league) + ".json")
   matches = results["results"]
   for match in matches:
     matchData = match["sport_event"]
-    line = getMatchDataLine(matchData, leagues)    
+    line = getMatchDataLine(matchData)    
     resultData = match["sport_event_status"]
-    homeGoals = resultData["home_score"]
-    awayGoals = resultData["away_score"]
+    try: homeGoals = resultData["home_score"]
+    except KeyError: homeGoals = 0
+    try: awayGoals = resultData["away_score"]
+    except KeyError: awayGoals = 0
     line = line + "," + str(homeGoals) + "," + str(awayGoals) + "\n"
     writeCSV("data/match.csv", line)
 
-def extractSchedule(leagues):
-  schedule = getJSONData("data/json/matches/schedule.json")
-  matches = schedule["sports_events"]
+def extractSchedule(league):
+  schedule = getJSONData("data/json/matches/schedule_" + str(league) + ".json")
+  matches = schedule["sport_events"]
   for match in matches:
-    line = getMatchDataLine(match, leagues)
+    line = getMatchDataLine(match)
     line = line + ",,\n"
     writeCSV("data/match.csv", line)
 
 def extractMatchData():
-  leagues = ["sr:tournament:17", "sr:tournament:23", "sr:tournament:34"]
-  leagues = leagues + ["sr:tournament:35", "sr:tournament:8"]
-  extractResults(leagues)
-  # extractSchedule(leagues)
+  leagues = [17, 23, 34, 35, 8]
+  for league in leagues:
+    extractResults(league)
+    extractSchedule(league)
 
 def fillCSV():
   createCSVs()
@@ -128,5 +129,3 @@ def fillCSV():
   for filename in os.listdir(path):
     extractData(path + filename)
   extractMatchData()
-
-extractMatchData()
