@@ -1,0 +1,18 @@
+body {
+  background-color: #FFDEAD;
+}
+
+h1 {
+  color: teal;
+  margin-left: 30px;
+}
+
+.bigbutton {
+  height: 40px;
+  color: white;
+  background-color: teal;
+  margin-left: 150px;
+  margin-top: 50px;
+  padding: 15 15 25 15;
+  font-size: 18px;
+}
