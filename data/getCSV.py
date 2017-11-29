@@ -26,6 +26,12 @@ def createCSVs():
   matchCSV = open("data/match.csv", 'w')
   matchCSV.close()
 
+def getJSONData(filename):
+  jsonFile = open(filename, 'r')
+  data = json.loads(jsonFile.read())
+  jsonFile.close()
+  return data
+
 def writeCSV(filename, line):
   csv = open(filename, 'a')
   csv.write(line)
@@ -73,17 +79,19 @@ def extractPlayerData(data):
     writeCSV("data/player.csv", line)
 
 def extractData(filename):
-  jsonFile = open(filename, 'r')
-  data = json.loads(jsonFile.read())
-  jsonFile.close()
+  data = getJSONData(filename)
   extractTeamData(data)
   extractVenueData(data)
   extractPlayerData(data)
+
+def extractMatchData():
+  results = getJSONData(filename)
 
 def fillCSV():
   createCSVs()
   path = "data/json/teams/"
   for filename in os.listdir(path):
     extractData(path + filename)
+  extractMatchData()
 
 fillCSV()
