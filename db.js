@@ -13,7 +13,7 @@ exports.dbConnect = function() {
   });
   state.connection.connect(function (err) {
     if (err) throw err
-    console.log('You are now connected...')
+    console.log('Database connection established')
   });
 }
 
@@ -25,5 +25,18 @@ exports.getAllLeagueIDs = function(callback) {
       leagues.push(results[i].ID);
     }
     callback(null, leagues);
+  });
+}
+
+exports.getLeague = function(id, callback) {
+  var sql = "SELECT * FROM League WHERE ID = '" + id + "';";
+  state.connection.query(sql, function (err, results) {
+    if (err) callback(err, null);
+    result = {};
+    result["id"] = id;
+    result["name"] = results[0].Name;
+    result["country"] = results[0].Country;
+    result["coefficient"] = results[0].UEFACoefficient;
+    callback(null, result);
   });
 }

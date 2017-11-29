@@ -15,7 +15,6 @@ app.use(express.static(path.join(__dirname, '/public')));
 db.dbConnect();
 
 app.get('/', function (req, res) {
-  var leagues = []
   db.getAllLeagueIDs(function(err, result) {
     if (err) throw err;
     var options = {
@@ -30,10 +29,11 @@ app.get('/', function (req, res) {
 });
 
 app.get('/league/:id', function (req, res) {
-  // league.html
-  console.log("test");
   var id = req.params.id;
-  res.render('test', { token: id });
+  db.getLeague(id, function(err, result) {
+    if (err) throw err;
+    res.render('league', result);
+  })
 });
 
 app.get('/league/:id/results', function (req, res) {
@@ -79,5 +79,5 @@ app.get('/team/:id/players', function (req, res) {
 });
 
 app.listen(3333, function () {
-  console.log('Example app listening on port 3333!');
+  console.log('Server started on port 3333!');
 });
