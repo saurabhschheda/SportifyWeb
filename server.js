@@ -31,6 +31,7 @@ app.get('/', function (req, res) {
 
 app.get('/league/:id', function (req, res) {
   // league.html
+  console.log("test");
   var id = req.params.id;
   res.render('test', { token: id });
 });
