@@ -1,0 +1,84 @@
+@import url(https://fonts.googleapis.com/css?family=Oswald);
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);
+
+@import url(https://fonts.googleapis.com/css?family=Pacifico);
+
+body {
+  background-color: rgb(228, 224, 224);
+  color: #000;
+}
+
+#container {
+  width: 100px;
+  text-align: center;
+}
+
+#container h1 {
+  font-weight: normal;
+  text-transform: uppercase;
+  margin:0 auto;
+  background-color:rgb(228, 224, 224);
+  position:absolute;
+  top:0px;
+  padding: 0 10px;
+
+}
+
+.style-1 {
+  font-size:48px;
+  font-family: "open sans condensed", sans-serif;
+  text-transform: none!important;
+}
+
+.style-2 {
+  font-size:64px;
+  font-family: "Open Sans Condensed", sans-serif;
+
+}
+
+.style-3 {
+  font-size:36px;
+  font-family: "open sans Condensed", sans-serif;
+}
+
+.style-1:before {
+  content: "";
+  height: 3px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  position: absolute;
+  width: 300%;
+  top: 50%;
+  left: -100%;
+  z-index: -999;
+}
+
+.style-2:before {
+  content: "";
+  height: 3px;
+  border-top: 2px dotted black;
+  border-bottom: 2px dotted black;
+  position: absolute;
+  width: 300%;
+  top: 45%;
+  left: -100%;
+  z-index: -999;
+}
+
+.style-3:before {
+  height:3px;
+  content: "";
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  
+  position: absolute;
+  width: 300%;
+  top: 50%;
+  left: -100%;
+  z-index: -999;
+}
+
+
+
+

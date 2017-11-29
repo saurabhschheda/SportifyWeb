@@ -1,0 +1,43 @@
+body{font: 67.5% Helvetica, Arial, Sans-serif; background:#dce1df;}
+/*Box sizing stuff*/
+* { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
+/*Font styels*/
+
+h1 {font-weight: normal; font-size:1.6em;}
+h1.callout{color:#FFFFFF; font-size:2em; margin:1em 0;}
+p{font-size: 1.2em; color:#a3a3a3 ; line-height: 1.5;}
+p strong{color:#555555;}
+p a{color:#27ae60; text-decoration:none;}
+
+/*img stuff*/
+img {max-width: 100%;}
+/*Generic styles*/
+#wrapper{ max-width: 800px; width:100%; margin:0 auto;}
+#generic-tabs{ width:100%; padding:20px;}
+
+/*Tab styles*/
+#generic-tabs ul { overflow: hidden; margin:0; padding:0;}
+#generic-tabs ul li{ float:left; display:inline-block; width:25%; background:#EDEDED; border-top:4px solid #CCCCCC; border-right:1px solid #CCCCCC;}
+#generic-tabs ul li:last-child {border-right:none;}
+#generic-tabs ul li:first-child { padding-left:0; }
+
+/*Tab link styles*/
+#generic-tabs ul li a {text-align:center; display:block; font-size: 1.2em; text-decoration: none; padding: 1.2em 1em; line-height: 16px; color:#BBBBBB;}
+
+/*Active tab styles*/
+#generic-tabs ul li.active {background:#FFFFFF; border-top:4px solid #27ae60;}
+#generic-tabs ul li.active a { color:#333333;}
+#generic-tabs ul li.active a i {color:#27ae60;}
+
+/*Tab content styles*/
+
+#generic-tabs .tab-content{ background:#FFFFFF; padding:3em 2em;}
+#generic-tabs .tab-content h1 {margin-top:0;}
+
+
+@media only screen and (min-width: 650px) {
+	h1{font-size:2em;}
+	h1.callout{font-size:3em;}
+	p{font-size:1.4em;}
+	#generic-tabs ul li a { font-size:1.6em; padding: 1.2em 2em; line-height: 16px; }  
+}
