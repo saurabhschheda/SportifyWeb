@@ -45,9 +45,8 @@ app.get('/league/:id/results', function (req, res) {
 });
 
 app.get('/league/:id/schedule', function (req, res) {
-  // matches_schedule.html
   var id = req.params.id;
-  res.render('test', { token: id });
+  res.render('schedule');
 });
 
 app.get('/league/:id/standings', function (req, res) {
