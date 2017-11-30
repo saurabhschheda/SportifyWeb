@@ -25,19 +25,22 @@
       </div>
     </div>
     <ul class="card__list">
-      <li class="card__item card__item--green">
-        <div class="card__info">
-          <div class="info-player">
-            
-            <p class="info-player__name">
-              Home vs Away<br />
-              <small>Date</small><br />
-              <small>Venue</small>
-            </p>            
-            
+
+      {{#each this}}
+        <li class="card__item card__item--green">
+          <div class="card__info">
+            <div class="info-player">
+              
+              <p class="info-player__name">
+                {{home}} vs {{away}}<br />
+                <small>{{date}}</small><br />
+                <small>{{venue}}</small>
+              </p>            
+              
+            </div>
           </div>
-        </div>
-      </li>
+        </li>
+      {{/each}}
       
       
     </ul>

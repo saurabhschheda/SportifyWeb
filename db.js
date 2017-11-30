@@ -41,16 +41,29 @@ exports.getLeague = function(id, callback) {
   });
 }
 
-exports.getLeagueResults = function (id, callback) {
-  var sql = "SELECT G.HomeGoals AS HomeGoals,";
-  sql = sql + "G.AwayGoals AS AwayGoals,";
+function generateMatchQuery(id, isLeague, isSchedule) {
+  var sql = "SELECT ";
+  if (!isSchedule) {
+    sql = sql + "G.HomeGoals AS HomeGoals,";
+    sql = sql + "G.AwayGoals AS AwayGoals,";
+  }  
   sql = sql + "T1.Name AS Home, T2.Name AS Away,";
   sql = sql + "G.Date AS Date, V.Name AS VenueName,";
   sql = sql + "V.City AS City, V.Country AS Country ";
   sql = sql + "FROM Game G, Team T1, Team T2, Venue V ";
-  sql = sql + "WHERE G.League = '" + id + "' AND G.HomeGoals IS NOT NULL ";
+  if (isLeague) sql = sql + "WHERE G.League = '" + id + "' ";
+  else 
+    sql = sql + "WHERE (G.Home = '" + id + "' OR G.Away = '" + id + "') "; 
+  sql = sql + " AND G.HomeGoals IS "
+  if (isSchedule) sql = sql + "NULL ";
+  else sql = sql + "NOT NULL ";
   sql = sql + "AND T1.ID = G.Home AND T2.ID = G.Away AND V.ID = G.Venue ";
   sql = sql + "ORDER BY Date DESC";
+  return sql;
+}
+
+exports.getResults = function (id, isLeague, callback) {
+  var sql = generateMatchQuery(id, isLeague, false);
   state.connection.query(sql, function (err, results) {
     if (err) callback(err, null);
     result = [];
@@ -62,6 +75,23 @@ exports.getLeagueResults = function (id, callback) {
       data["away"] = results[i].Away;
       data["date"] = results[i].Date;
       data["venue"] = results[i].VenueName + ", " + results[i].City + ", " + results[i].country;
+      result.push(data);
+    }
+    callback(null, result);
+  });
+}
+
+exports.getSchedule = function (id, isLeague, callback) {
+  var sql = generateMatchQuery(id, isLeague, true);
+  state.connection.query(sql, function (err, results) {
+    if (err) callback(err, null);
+    result = [];
+    for (var i = 0; i < results.length; ++i) {
+      var data = {}
+      data["home"] = results[i].Home;
+      data["away"] = results[i].Away;
+      data["date"] = results[i].Date;
+      data["venue"] = results[i].VenueName + ", " + results[i].City + ", " + results[i].Country;
       result.push(data);
     }
     callback(null, result);

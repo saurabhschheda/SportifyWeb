@@ -38,7 +38,7 @@ app.get('/league/:id', function (req, res) {
 
 app.get('/league/:id/results', function (req, res) {
   var id = req.params.id;
-  db.getLeagueResults(id, function (err, result) {
+  db.getResults(id, true, function (err, result) {
     if (err) throw err;
     res.render('results', result);
   })
@@ -46,7 +46,10 @@ app.get('/league/:id/results', function (req, res) {
 
 app.get('/league/:id/schedule', function (req, res) {
   var id = req.params.id;
-  res.render('schedule');
+  db.getSchedule(id, true, function (err, result) {
+    if (err) throw err;
+    res.render('schedule', result);
+  })
 });
 
 app.get('/league/:id/standings', function (req, res) {
