@@ -85,9 +85,8 @@ app.get('/team/:id/schedule', function (req, res) {
 });
 
 app.get('/team/:id/players', function (req, res) {
-  // Team_players.html
   var id = req.params.id;
-  res.render('test', { token: id });
+  res.render('players');
 });
 
 app.listen(3333, function () {
