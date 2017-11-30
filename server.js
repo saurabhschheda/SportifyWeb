@@ -37,9 +37,11 @@ app.get('/league/:id', function (req, res) {
 });
 
 app.get('/league/:id/results', function (req, res) {
-  // matches_result.html
   var id = req.params.id;
-  res.render('test', { token: id });
+  db.getLeagueResults(id, function (err, result) {
+    if (err) throw err;
+    res.render('results', result);
+  })
 });
 
 app.get('/league/:id/schedule', function (req, res) {

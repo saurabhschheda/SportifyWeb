@@ -13,14 +13,7 @@ var Cards = (function() {
 	var cardinfo = cardfull.find('.card__full-info');
 	var w 		= $(window);
 	
-	var data = [
-		{
-			num: 18,
-			handle: '@tonyromo',
-			info: 'This is some info about the player and sports.'
-		},
-		
-	];
+	
 	
 	var moveCard = function() {
 		var self = $(this);
