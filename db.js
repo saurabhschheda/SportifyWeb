@@ -41,6 +41,23 @@ exports.getLeague = function(id, callback) {
   });
 }
 
+exports.getTeam = function (id, callback) {
+  var sql = "SELECT T.ID AS ID, T.Name AS Name, "
+  sql = sql + "L.Name AS League, T.Position AS Position, T.Manager AS Manager"
+  sql = sql + " FROM Team T, League L WHERE T.ID = '" + id + "' ";
+  sql = sql + " AND T.League = L.ID;"
+  state.connection.query(sql, function (err, results) {
+    if (err) callback(err, null);
+    result = {};
+    result["id"] = results[0].ID;
+    result["name"] = results[0].Name;
+    result["league"] = results[0].League;
+    result["position"] = results[0].Position;
+    result["manager"] = results[0].Manager;
+    callback(null, result);
+  });
+}
+
 function generateMatchQuery(id, isLeague, isSchedule) {
   var sql = "SELECT ";
   if (!isSchedule) {

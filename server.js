@@ -61,21 +61,27 @@ app.get('/league/:id/standings', function (req, res) {
 });
 
 app.get('/team/:id', function (req, res) {
-  // team.html
   var id = req.params.id;
-  res.render('test', { token: id });
+  db.getTeam(id, function (err, result) {
+    if (err) throw err;
+    res.render('team', result);
+  })
 });
 
 app.get('/team/:id/results', function (req, res) {
-  // match_result.html
   var id = req.params.id;
-  res.render('test', { token: id });
+  db.getResults(id, false, function (err, result) {
+    if (err) throw err;
+    res.render('results', result);
+  })
 });
 
 app.get('/team/:id/schedule', function (req, res) {
-  // match_schedule.html
   var id = req.params.id;
-  res.render('test', { token: id });
+  db.getSchedule(id, false, function (err, result) {
+    if (err) throw err;
+    res.render('schedule', result);
+  })
 });
 
 app.get('/team/:id/players', function (req, res) {
