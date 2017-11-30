@@ -131,3 +131,31 @@ exports.getStandings = function(id, callback) {
     callback(null, result);
   });
 }
+
+exports.getPlayers = function (id, callback) {
+  var sql = "SELECT P.Name AS Name, P.Age AS Age, "
+  sql = sql + "P.Position AS Position, P.JerseyNo AS Jersey"
+  sql = sql + " FROM Team T, Player P WHERE P.Team = '" + id + "' ";
+  sql = sql + " AND P.Team = T.ID;"
+  state.connection.query(sql, function (err, results) {
+    if (err) callback(err, null);
+    result = [];
+    for (var i = 0; i < results.length; ++i) {
+      var data = {};
+      var name = results[i].Name;
+      var seperator = name.indexOf(' ');
+      if (seperator != -1) {
+        data["firstName"] = name.substr(0, name.indexOf(' '));
+        data["lastName"] = name.substr(name.indexOf(' '));
+      } else {
+        data["lastName"] = name;
+        data["firstName"] = "";
+      }
+      data["age"] = results[i].Age;
+      data["position"] = results[i].Position;
+      data["jersey"] = results[i].Jersey;
+      result.push(data);
+    }
+    callback(null, result);
+  });
+}
