@@ -75,7 +75,8 @@ function generateMatchQuery(id, isLeague, isSchedule) {
   if (isSchedule) sql = sql + "NULL ";
   else sql = sql + "NOT NULL ";
   sql = sql + "AND T1.ID = G.Home AND T2.ID = G.Away AND V.ID = G.Venue ";
-  sql = sql + "ORDER BY Date DESC";
+  sql = sql + "ORDER BY Date";
+  if (!isSchedule) sql = sql + " DESC";
   return sql;
 }
 
