@@ -97,3 +97,19 @@ exports.getSchedule = function (id, isLeague, callback) {
     callback(null, result);
   });
 }
+
+exports.getStandings = function(id, callback) {
+  var sql = "SELECT ID, Position, Name FROM Team WHERE League = '" + id + "' ORDER BY Position";
+  state.connection.query(sql, function (err, results) {
+    if (err) callback(err, null);
+    result = [];
+    for (var i = 0; i < results.length; ++i) {
+      var data = {}
+      data["id"] = results[i].ID;
+      data["position"] = results[i].Position;
+      data["name"] = results[i].Name;
+      result.push(data);
+    }
+    callback(null, result);
+  });
+}

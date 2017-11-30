@@ -53,9 +53,11 @@ app.get('/league/:id/schedule', function (req, res) {
 });
 
 app.get('/league/:id/standings', function (req, res) {
-  // league_Standings.html
   var id = req.params.id;
-  res.render('test', { token: id });
+  db.getStandings(id, function (err, result) {
+    if (err) throw err;
+    res.render('standings', result);
+  })
 });
 
 app.get('/team/:id', function (req, res) {
